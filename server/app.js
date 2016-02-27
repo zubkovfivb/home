@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 mongoose.Promise = require('bluebird');
 import config from './config/environment';
 import http from 'http';
+import sensorServer from './sensors/server';
 
 // Connect to MongoDB
 mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -25,6 +26,8 @@ var app = express();
 var server = http.createServer(app);
 require('./config/express')(app);
 require('./routes')(app);
+
+sensorServer.start();
 
 // Start server
 function startServer() {
